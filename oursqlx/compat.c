@@ -1,6 +1,6 @@
 #include "compat.h"
 
-my_bool _oursqlx_init_stmt_cursor(MYSQL_STMT *stmt, unsigned long *cursor_type) {
+bool _oursqlx_init_stmt_cursor(MYSQL_STMT *stmt, unsigned long *cursor_type) {
 #if MYSQL_VERSION_ID >= 50002
     *cursor_type = CURSOR_TYPE_READ_ONLY;
     return mysql_stmt_attr_set(stmt, STMT_ATTR_CURSOR_TYPE, cursor_type);
@@ -9,7 +9,7 @@ my_bool _oursqlx_init_stmt_cursor(MYSQL_STMT *stmt, unsigned long *cursor_type) 
 #endif
 }
 
-my_bool _oursqlx_stmt_set_prefetch_rows(MYSQL_STMT *stmt, 
+bool _oursqlx_stmt_set_prefetch_rows(MYSQL_STMT *stmt, 
         unsigned long *nrows) {
 #if MYSQL_VERSION_ID >= 50006
     return mysql_stmt_attr_set(stmt, STMT_ATTR_PREFETCH_ROWS, nrows);

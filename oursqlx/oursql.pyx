@@ -43,8 +43,8 @@ cdef struct column_output:
     unsigned int flags
     bint is_binary
     unsigned long length
-    my_bool is_null
-    my_bool error
+    bool is_null
+    bool error
     column_data buf
 
 import exceptions

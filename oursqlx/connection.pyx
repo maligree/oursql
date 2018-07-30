@@ -87,7 +87,7 @@ cdef class Connection:
             bint multi_statements=True, bint autoreconnect=False):
         cdef unsigned long flags = 0
         cdef unsigned int uint_tmp
-        cdef my_bool bool_tmp
+        cdef bool bool_tmp
         if compress:
             flags |= CLIENT_COMPRESS
         if found_rows:
@@ -109,7 +109,7 @@ cdef class Connection:
         mysql_options(self.conn, 
             MYSQL_REPORT_DATA_TRUNCATION, <char *>&bool_tmp)
         bool_tmp = require_secure_auth
-        mysql_options(self.conn, MYSQL_SECURE_AUTH, <char *>&bool_tmp)
+        # mysql_options(self.conn, MYSQL_SECURE_AUTH, <char *>&bool_tmp)
         if connect_timeout is not None:
             uint_tmp = connect_timeout
             mysql_options(self.conn, 

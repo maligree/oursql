@@ -13,11 +13,11 @@ cdef inline int mysql_ping(MYSQL *conn):
     with nogil:
         return _mysql_ping(conn)
 
-cdef inline my_bool mysql_commit(MYSQL *conn):
+cdef inline bool mysql_commit(MYSQL *conn):
     with nogil:
         return _mysql_commit(conn)
 
-cdef inline my_bool mysql_rollback(MYSQL *conn):
+cdef inline bool mysql_rollback(MYSQL *conn):
     with nogil:
         return _mysql_rollback(conn)
 
@@ -34,7 +34,7 @@ cdef inline int mysql_stmt_fetch(MYSQL_STMT *stmt):
     with nogil:
         return _mysql_stmt_fetch(stmt)
 
-cdef inline my_bool mysql_stmt_send_long_data(MYSQL_STMT *stmt, 
+cdef inline bool mysql_stmt_send_long_data(MYSQL_STMT *stmt, 
         unsigned int index, char *data, unsigned long length):
     with nogil:
         return _mysql_stmt_send_long_data(stmt, index, data, length)

@@ -40,8 +40,8 @@ enum _oursqlx_exception_type {
     _oursqlx_UnknownError,
 };
 
-my_bool _oursqlx_init_stmt_cursor(MYSQL_STMT *, unsigned long *);
-my_bool _oursqlx_stmt_set_prefetch_rows(MYSQL_STMT *, unsigned long *);
+bool _oursqlx_init_stmt_cursor(MYSQL_STMT *, unsigned long *);
+bool _oursqlx_stmt_set_prefetch_rows(MYSQL_STMT *, unsigned long *);
 int _oursqlx_stmt_cursor_prefetch(MYSQL_STMT *, int *);
 int _oursqlx_PyObject_AsReadBuffer(PyObject *, void **, Py_ssize_t *);
 enum _oursqlx_exception_type _oursqlx_exc_from_errno(int);

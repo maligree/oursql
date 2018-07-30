@@ -1,6 +1,6 @@
 cdef extern from *:
     ctypedef char const_char "const char"
-    ctypedef char my_bool
+    ctypedef char bool
     ctypedef struct MYSQL_STMT:
         pass
     ctypedef struct MYSQL:
@@ -18,8 +18,8 @@ cdef extern from "compat.h" nogil:
         _oursqlx_PermissionsError
         _oursqlx_UnknownError
     
-    my_bool _oursqlx_init_stmt_cursor(MYSQL_STMT *, unsigned long *)
-    my_bool _oursqlx_stmt_set_prefetch_rows(MYSQL_STMT *, unsigned long *)
+    bool _oursqlx_init_stmt_cursor(MYSQL_STMT *, unsigned long *)
+    bool _oursqlx_stmt_set_prefetch_rows(MYSQL_STMT *, unsigned long *)
     int _oursqlx_stmt_cursor_prefetch(MYSQL_STMT *, int *)
     int _oursqlx_PyObject_AsReadBuffer(object, void **, Py_ssize_t *) except -1
     _oursqlx_exception_type _oursqlx_exc_from_errno(int)
@@ -124,7 +124,6 @@ cdef extern from "mysql.h" nogil:
         MYSQL_READ_DEFAULT_FILE
         MYSQL_READ_DEFAULT_GROUP
         MYSQL_REPORT_DATA_TRUNCATION
-        MYSQL_SECURE_AUTH
         MYSQL_SET_CHARSET_DIR
         MYSQL_SET_CHARSET_NAME
         MYSQL_SHARED_MEMORY_BASE_NAME
@@ -135,7 +134,6 @@ cdef extern from "mysql.h" nogil:
         MYSQL_OPT_USE_EMBEDDED_CONNECTION
         MYSQL_OPT_GUESS_CONNECTION
         MYSQL_SET_CLIENT_IP
-        MYSQL_SECURE_AUTH
         MYSQL_REPORT_DATA_TRUNCATION
         MYSQL_OPT_RECONNECT
         MYSQL_OPT_SSL_VERIFY_SERVER_CERT
@@ -181,9 +179,9 @@ cdef extern from "mysql.h" nogil:
         void *buffer
         unsigned long buffer_length
         unsigned long *length
-        my_bool *is_null
-        my_bool is_unsigned
-        my_bool *error
+        bool *is_null
+        bool is_unsigned
+        bool *error
     
     ctypedef struct MYSQL_TIME:
         unsigned int year, month, day, hour, minute, second
@@ -196,7 +194,7 @@ cdef extern from "mysql.h" nogil:
     
     MYSQL *mysql_init(MYSQL *)
     int mysql_options(MYSQL *, mysql_option, char *)
-    my_bool mysql_ssl_set(MYSQL *, char *key, char *cert, char *ca, 
+    bool mysql_ssl_set(MYSQL *, char *key, char *cert, char *ca, 
         char *capath, char *cipher)
     MYSQL *_mysql_real_connect "mysql_real_connect" (
         MYSQL *, char *host, char *user, char *passwd, char *db, 
@@ -204,8 +202,8 @@ cdef extern from "mysql.h" nogil:
     unsigned int mysql_errno(MYSQL *)
     char *mysql_error(MYSQL *)
     int _mysql_ping "mysql_ping" (MYSQL *)
-    my_bool _mysql_commit "mysql_commit" (MYSQL *)
-    my_bool _mysql_rollback "mysql_rollback" (MYSQL *)
+    bool _mysql_commit "mysql_commit" (MYSQL *)
+    bool _mysql_rollback "mysql_rollback" (MYSQL *)
     char *mysql_character_set_name(MYSQL *)
     int mysql_set_character_set(MYSQL *, char *csname)
     unsigned int mysql_warning_count(MYSQL *)
@@ -216,19 +214,19 @@ cdef extern from "mysql.h" nogil:
     char *mysql_stmt_error(MYSQL_STMT *)
     int _mysql_stmt_prepare "mysql_stmt_prepare" (MYSQL_STMT *, 
         char *stmt_str, unsigned long length)
-    my_bool mysql_stmt_bind_param(MYSQL_STMT *, MYSQL_BIND *bind)
-    my_bool mysql_stmt_bind_result(MYSQL_STMT *, MYSQL_BIND *bind)
+    bool mysql_stmt_bind_param(MYSQL_STMT *, MYSQL_BIND *bind)
+    bool mysql_stmt_bind_result(MYSQL_STMT *, MYSQL_BIND *bind)
     unsigned long mysql_stmt_param_count(MYSQL_STMT *)
     int _mysql_stmt_execute "mysql_stmt_execute" (MYSQL_STMT *)
     int _mysql_stmt_fetch "mysql_stmt_fetch" (MYSQL_STMT *)
     my_ulonglong mysql_stmt_affected_rows(MYSQL_STMT *)
     my_ulonglong mysql_stmt_insert_id(MYSQL_STMT *)
-    my_bool _mysql_stmt_send_long_data "mysql_stmt_send_long_data" (MYSQL_STMT *, 
+    bool _mysql_stmt_send_long_data "mysql_stmt_send_long_data" (MYSQL_STMT *, 
         unsigned int parameter_number, char *data, unsigned long length)
     int _mysql_stmt_fetch_column "mysql_stmt_fetch_column" (MYSQL_STMT *, 
         MYSQL_BIND *bind, unsigned int column, unsigned long offset)
     int _mysql_stmt_store_result "mysql_stmt_store_result" (MYSQL_STMT *)
-    my_bool mysql_stmt_free_result(MYSQL_STMT *)
+    bool mysql_stmt_free_result(MYSQL_STMT *)
     void mysql_stmt_close(MYSQL_STMT *)
     
     MYSQL_RES *mysql_stmt_result_metadata(MYSQL_STMT *)
